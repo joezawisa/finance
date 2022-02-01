@@ -53,6 +53,18 @@ The `users` table holds information about users of the application.
 | `name`     | `VARCHAR(64)` | The user's full name                   |
 | `password` | `BYTEA`       | The user's password, salted and hashed |
 
+### Accounts
+
+The `accounts` table holds information about financial accounts.
+
+| Field     | Type          | Description                         |
+| --------- | ------------- | ----------------------------------- |
+| `id`      | `BIGINT`      | A unique identifier for the account |
+| `owner`   | `BIGINT`      | User to whom the account belongs    |
+| `type`    | `SMALLINT`    | Account type                        |
+| `name`    | `VARCHAR(64)` | Account name                        |
+| `balance` | `REAL`        | Account balance                     |
+
 ## Setup
 
 ### Install a Local Development Environment
