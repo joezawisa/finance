@@ -10,6 +10,9 @@ set +u
 source env/bin/activate
 set -u
 
+# Upgrade pip to latest version
+pip install --upgrade pip
+
 # Install dependencies
 pip install -r tools/requirements.txt
 pip install -r requirements.txt
