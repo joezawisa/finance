@@ -10,13 +10,16 @@ accounts, investments, and other assets. The application is written in
 
 ## Code Structure
 
-| Path                                   | Description                                        |
-| -------------------------------------- | -------------------------------------------------- |
-| [`README.md`](README.md)               | Project documentation                              |
-| [`.gitignore`](.gitignore)             | Git filter                                         |
-| [`requirements.txt`](requirements.txt) | Application dependencies                           |
-| [`tools/`](tools/)                     | Development tools                                  |
-| [`tools/install`](tools/install)       | Script to install local development environment    |
+| Path                                         | Description                                        |
+| -------------------------------------------- | -------------------------------------------------- |
+| [`README.md`](README.md)                     | Project documentation                              |
+| [`.gitignore`](.gitignore)                   | Git filter                                         |
+| [`requirements.txt`](requirements.txt)       | Application dependencies                           |
+| [`setup.py`](setup.py)                       | Package configuration                              |
+| [`finance/`](finance/)                       | Application package                                |
+| [`finance/__init__.py`](finance/__init__.py) | Application initialization                         |
+| [`tools/`](tools/)                           | Development tools                                  |
+| [`tools/install`](tools/install)             | Script to install local development environment    |
 
 ## Setup
 
