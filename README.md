@@ -299,7 +299,10 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
         "index": "/",
         "login": "/login",
         "logout": "/logout",
-        "users": "/users"
+        "users": "/users",
+        "types": {
+            "accounts": "/accounts/types"
+        }
     },
     "url": "/"
 }
@@ -414,3 +417,39 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/users' -H 'C
 ### Accounts
 
 The accounts API is used to manage financial accounts.
+
+#### Show Account Types
+
+Endpoint: `GET /accounts/types`
+
+Get a list of account types.
+
+##### Request Parameters
+
+This endpoint does not require any parameters to process a request.
+
+##### Response
+
+This endpoint returns a list of account types. A status code of `200 OK`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/accounts/types'
+```
+```json
+{
+    "types": [
+        {
+            "id": 0,
+            "name": "Checking"
+        },
+        {
+            "id": 1,
+            "name": "Savings"
+        }
+    ],
+    "url": "/accounts/types"
+}
+```

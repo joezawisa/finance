@@ -22,7 +22,10 @@ def index():
             'index': flask.url_for('index'),
             'login': flask.url_for('login'),
             'logout': flask.url_for('logout'),
-            'users': flask.url_for('users.index')
+            'users': flask.url_for('users.index'),
+            'types': {
+                'accounts': flask.url_for('accounts.types')
+            }
         },
         'url': flask.url_for('index')
     }, status_code=200)
