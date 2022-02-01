@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Stop on errors, print commands
+set -Eeuo pipefail
+
+# Create a Python virtual enviornment
+python3 -m venv env
+# Activate Python virtual enviornment
+set +u
+source env/bin/activate
+set -u
+
+# Install dependencies
+pip install -r requirements.txt
