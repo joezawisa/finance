@@ -22,6 +22,7 @@ setuptools.setup(
     install_requires=[
         'flask==2.0.2',
         'gunicorn==20.1.0',
-        'psycopg==3.0.1'
+        'psycopg==3.0.1',
+        'bcrypt==3.2.0'
     ]
 )
