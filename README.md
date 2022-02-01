@@ -38,6 +38,17 @@ application. Its structure is defined in [`schema.sql`](schema.sql). The
 [database management script](#manage-the-database) can be used to initialize and
 perform other operations on the database.
 
+### Users
+
+The `users` table holds information about users of the application.
+
+| Field      | Type          | Description                            |
+| ---------- | ------------- | -------------------------------------- |
+| `id`       | `BIGINT`      | A unique identifier for the user       |
+| `email`    | `VARCHAR(64)` | The user's email address               |
+| `name`     | `VARCHAR(64)` | The user's full name                   |
+| `password` | `BYTEA`       | The user's password, salted and hashed |
+
 ## Setup
 
 ### Install a Local Development Environment
