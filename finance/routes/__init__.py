@@ -58,4 +58,5 @@ def handle_exception(e):
 
 # Import API controllers
 from . import index
+from . import auth
 from . import users

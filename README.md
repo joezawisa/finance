@@ -27,6 +27,7 @@ accounts, investments, and other assets. The application is written in
 | [`finance/model.py`](finance/model.py)               | Application database interface                   |
 | [`finance/routes/`](finance/routes/)                 | API controllers                                  |
 | [`finance/routes/index.py`](finance/routes/index.py) | Index API controller                             |
+| [`finance/routes/auth.py`](finance/routes.auth.py)   | Authentication API controller                    |
 | [`finance/routes/users.py`](finance/routes/users.py) | Users API controller                             |
 | [`tools/`](tools/)                                   | Development tools                                |
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
@@ -288,6 +289,10 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
     "url": "/"
 }
 ```
+
+### Authentication
+
+The authentication API provides method to login and logout as a registered user.
 
 ### Users
 
