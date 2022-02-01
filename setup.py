@@ -20,6 +20,7 @@ setuptools.setup(
     ],
     python_requires='>=3.10',
     install_requires=[
-        'flask==2.0.2'
+        'flask==2.0.2',
+        'gunicorn==20.1.0'
     ]
 )
