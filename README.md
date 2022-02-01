@@ -22,6 +22,7 @@ accounts, investments, and other assets. The application is written in
 | [`setup.py`](setup.py)                       | Package configuration                              |
 | [`finance/`](finance/)                       | Application package                                |
 | [`finance/__init__.py`](finance/__init__.py) | Application initialization                         |
+| [`finance/config.py`](finance/config.py)     | Application configuration                          |
 | [`tools/`](tools/)                           | Development tools                                  |
 | [`tools/install`](tools/install)             | Script to install local development environment    |
 
