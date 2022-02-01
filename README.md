@@ -284,6 +284,7 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
 {
     "services": {
         "index": "/",
+        "login": "/login",
         "users": "/users"
     },
     "url": "/"
@@ -293,6 +294,36 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
 ### Authentication
 
 The authentication API provides method to login and logout as a registered user.
+
+#### Login
+
+Endpoint: `POST /login`
+
+Login as a registered user.
+
+##### Request Parameters
+
+| Key        | Type   | Location | Description          | Required | Default |
+| ---------- | ------ | -------- | -------------------- | -------- | ------- |
+| `email`    | string | JSON     | User's email address | Yes      | None    |
+| `password` | string | JSON     | User's password      | Yes      | None    |
+
+##### Response
+
+This endpoint does not return any data. It logs the user in by storing their
+email address in a session cookie. A status code of `200 OK` indicates a
+successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/login' -H 'Content-Type: application/json' -d '{"email":"someone@example.com","password":"p4$5w0rd"}'
+```
+```json
+{
+    "url": "/login"
+}
+```
 
 ### Users
 

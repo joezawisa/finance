@@ -20,6 +20,7 @@ def index():
     return make_response(data={
         'services': {
             'index': flask.url_for('index'),
+            'login': flask.url_for('login'),
             'users': flask.url_for('users.index')
         },
         'url': flask.url_for('index')
