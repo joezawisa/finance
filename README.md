@@ -145,3 +145,8 @@ with [Docker Compose](https://docs.docker.com/compose/),
 You can also set the `TZ` environment variable when you run the application to
 configure the time zone. However, it is better to set the time zone when
 building the application.
+
+## Development Tools
+
+The [`tools`](tools/) directory contains development tools and is not built into
+the application image.
