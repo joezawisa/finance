@@ -16,3 +16,4 @@ app.logger.setLevel(gunicorn_logger.level)
 
 # Tell our application about its components
 import finance.model
+import finance.routes

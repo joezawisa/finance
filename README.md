@@ -25,6 +25,7 @@ accounts, investments, and other assets. The application is written in
 | [`finance/__init__.py`](finance/__init__.py)         | Application initialization                       |
 | [`finance/config.py`](finance/config.py)             | Application configuration                        |
 | [`finance/model.py`](finance/model.py)               | Application database interface                   |
+| [`finance/routes/`](finance/routes/)                 | API controllers                                  |
 | [`tools/`](tools/)                                   | Development tools                                |
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
 | [`tools/install`](tools/install)                     | Script to install local development environment  |
@@ -248,3 +249,10 @@ The `init` subcommand initializes the database by loading it from the
 ```bash
 tools/db [options] init
 ```
+
+## API
+
+The following endpoints are exposed by the finance API. When following the
+examples, make sure to replace `localhost` with the hostname (or IP address) and
+port of the server where you're hosting the application. You can also remove the
+`-k` flag if you're not using a self-signed certificate.
