@@ -150,3 +150,14 @@ building the application.
 
 The [`tools`](tools/) directory contains development tools and is not built into
 the application image.
+
+### Install
+
+The [install script](tools/install) installs a local development environment.
+
+```bash
+tools/install
+```
+
+See [Install a Local Development Environment](#install-a-local-development-environment)
+for details.
