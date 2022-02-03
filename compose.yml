@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+    web:
+        build:
+            context: .
+            args:
+                TZ: America/Detroit
+        command: [
+            "--log-level=debug",
+            "--access-logformat=%(t)s %(h)s %(a)s %(r)s %(s)s %(b)s",
+            "--access-logfile=-",
+            "--log-file=-",
+            "--reload",
+            "--keyfile", "finance.key",
+            "--certfile", "finance.crt"
+        ]
+        volumes:
+            - .:/app
+        ports:
+            - 443:5000
