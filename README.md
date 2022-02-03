@@ -130,3 +130,18 @@ This ensures a fresh start next time you run the application.
 ```bash
 docker compose down
 ```
+
+### Environment Variables
+
+These environment variables must be present to run the application. If running
+with [Docker Compose](https://docs.docker.com/compose/),
+[`compose.yml`](compose.yml) will set them for you.
+
+| Name               | Description                                       | Required | Default |
+| ------------------ | ------------------------------------------------- | -------- | ------- |
+| `APPLICATION_ROOT` | Root URI of the application                       | No       | `/`     |
+| `FLASK_KEY`        | Secret key for encrypting Flask's session cookies | Yes      | None    |
+
+You can also set the `TZ` environment variable when you run the application to
+configure the time zone. However, it is better to set the time zone when
+building the application.

@@ -4,6 +4,9 @@ FROM python:3.10
 ARG TZ Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# Set the application's root path
+ENV APPLICATION_ROOT /
+
 WORKDIR /app
 
 # Install dependencies
