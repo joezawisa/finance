@@ -28,7 +28,10 @@ accounts, investments, and other assets. The application is written in
 To install a local development environment, you will need
 [Python 3](https://www.python.org). Run the
 [install script](tools/install) to create a
-[Python virtual environment](https://docs.python.org/3/tutorial/venv.html).
+[Python virtual environment](https://docs.python.org/3/tutorial/venv.html). For
+the install script to work correctly, you will also need
+[OpenSSL](https://www.openssl.org) installed because the script uses it to
+create SSL/TLS credentials.
 
 ```bash
 tools/install

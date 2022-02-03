@@ -15,3 +15,9 @@ pip install -r requirements.txt
 
 # Install finance package
 pip install -e .
+
+# Create SSL/TLS credentials
+openssl req -nodes \
+    -newkey rsa:4096 -keyout finance.key \
+    -x509 -days 365 -out finance.crt \
+    -subj "/CN=finance"
