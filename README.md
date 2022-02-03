@@ -29,11 +29,14 @@ accounts, investments, and other assets. The application is written in
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
 | [`tools/install`](tools/install)                     | Script to install local development environment  |
 | [`tools/generateSecretKey`](tools/generateSecretKey) | Script to generate a secret key for Flask        |
+| [`tools/db`](tools/db)                               | Script to manage the database                    |
 
 ## Database Structure
 
 A [PostgreSQL](https://www.postgresql.org) database is required to run the
-application. Its structure is defined in [`schema.sql`](schema.sql).
+application. Its structure is defined in [`schema.sql`](schema.sql). The
+[database management script](#manage-the-database) can be used to initialize and
+perform other operations on the database.
 
 ## Setup
 
@@ -198,3 +201,30 @@ tools/generateSecretKey
 To use the secret key that this script generates, pass it to
 [Flask](https://flask.palletsprojects.com) in the `FLASK_KEY` environment
 variable.
+
+### Manage the Database
+
+The [database management script](tools/db) makes it easy to perform operations
+on a PostgreSQL database. Each command to manage the database starts with
+`tools/db` followed by several options.
+
+| Short | Long         | Description                | Required | Default     |
+| ----- | ------------ | -------------------------- | -------- | ----------- |
+| `-u`  | `--user`     | Database user              | No       | `finance`   |
+| `-p`  | `--password` | Database password          | No       | `finance`   |
+| `-h`  | `--host`     | Server hostname/IP address | No       | `localhost` |
+| `-t`  | `--port`     | Server TCP port            | No       | `5432`      |
+| `-d`  | `--database` | Database name              | No       | `finance`   |
+
+The operation to perform is specified by a subcommand.
+
+```bash
+tools/db [options] <subcommand>
+```
+
+If we wanted to explicitly specify all of the connection options, our command
+would look something like this.
+
+```bash
+tools/db -u <user> -p <password> -h <host> -t <port> -d <database> <subcommand>
+```

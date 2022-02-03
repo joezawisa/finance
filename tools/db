@@ -1,0 +1,52 @@
+#!env/bin/python
+
+import click
+import psycopg
+import sys
+
+@click.group()
+@click.option('-u', '--user', default='finance', help='Database user')
+@click.option('-p', '--password', default='finance', help='Database password')
+@click.option('-h', '--host', default='localhost', help='Server hostname/IP address')
+@click.option('-t', '--port', default=5432, help='Server TCP port')
+@click.option('-d', '--database', default='finance', help='Database name')
+@click.pass_context
+def cli(ctx, user, password, host, port, database):
+    """
+    Connect to the specified database and pass control to a child command.
+
+    Parameters:
+    - ctx: click context
+    - user: database user
+    - password: database password
+    - host: server hostname/IP address
+    - port: server TCP port
+    - database: database names
+    
+    Returns:
+    - None
+    """
+
+    # Ensure that ctx.obj exists and is a dictionary
+    ctx.ensure_object(dict)
+
+    try:
+
+        # Connect to the database
+        ctx.obj['DB'] = psycopg.connect(
+            user=user,
+            password=password,
+            host=host,
+            port=port,
+            dbname=database,
+            row_factory=psycopg.rows.dict_row
+        )
+
+    # Handle connection errors
+    except psycopg.errors.OperationalError as error:
+
+        click.echo(f'Error (operational): {error}', err = True)
+        sys.exit(1)
+
+# Make cli() the entry point of this script
+cli()
