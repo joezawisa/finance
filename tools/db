@@ -48,5 +48,55 @@ def cli(ctx, user, password, host, port, database):
         click.echo(f'Error (operational): {error}', err = True)
         sys.exit(1)
 
+@cli.command('init')
+@click.pass_context
+def init(ctx):
+    """
+    Initialize the database by loading its schema.
+
+    Parameters:
+    - ctx: click context
+    
+    Returns:
+    - None
+    """
+
+    # Get database connection from click context
+    db = ctx.obj['DB']
+
+    try:
+
+        # Load the schema from a file
+        with open('schema.sql', 'r') as schema:
+
+            db.execute(schema.read())
+
+    # Handle errors related to reading the schema
+    except IOError as error:
+
+        db.close()
+        click.echo(f"Error (I/O): {error}", err = True)
+        sys.exit(1)
+
+    # Handle errors related to the schema's syntax
+    except psycopg.errors.SyntaxError as error:
+
+        db.close()
+        click.echo(f"Error (syntax): {error}", err = True)
+        sys.exit(1)
+
+    # Handle errors related to the schema having already been loaded
+    except psycopg.errors.DuplicateTable as error:
+
+        db.close()
+        click.echo(f"Error (duplicate table): {error}", err = True)
+        sys.exit(1)
+
+    # Save our changes
+    db.commit()
+    db.close()
+
+    click.echo('Database initizialization completed')
+
 # Make cli() the entry point of this script
 cli()

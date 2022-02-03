@@ -228,3 +228,12 @@ would look something like this.
 ```bash
 tools/db -u <user> -p <password> -h <host> -t <port> -d <database> <subcommand>
 ```
+
+#### init
+
+The `init` subcommand initializes the database by loading it from the
+[`schema`](schema.sql).
+
+```bash
+tools/db [options] init
+```
