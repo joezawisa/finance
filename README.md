@@ -266,6 +266,15 @@ The `init` subcommand initializes the database by loading it from the
 tools/db [options] init
 ```
 
+#### reset
+
+The `reset` subcommand resets the database by dropping all the tables and then
+reloading the [schema](schema.sql).
+
+```bash
+tools/db [options] reset
+```
+
 ## API
 
 The following endpoints are exposed by the finance API. When following the

@@ -98,5 +98,42 @@ def init(ctx):
 
     click.echo('Database initizialization completed')
 
+@cli.command('reset')
+@click.pass_context
+def init(ctx):
+    """
+    Reset the database.
+
+    Parameters:
+    - ctx: click context
+    
+    Returns:
+    - None
+    """
+
+    # Get database connection from click context
+    db = ctx.obj['DB']
+
+    tables = [
+        'users',
+        'accounts'
+    ]
+
+    # Drop all tables from the database
+    for table in tables:
+
+        db.execute('DROP TABLE IF EXISTS %s CASCADE;' % table)
+
+    # Re-create all the tables
+    with open('schema.sql', 'r') as schema:
+
+        db.execute(schema.read())
+
+    # Save our changes
+    db.commit()
+    db.close()
+
+    click.echo('Database reset completed')
+
 # Make cli() the entry point of this script
 cli()
