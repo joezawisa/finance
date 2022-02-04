@@ -282,7 +282,8 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
 ```json
 {
     "services": {
-        "index": "/"
+        "index": "/",
+        "users": "/users"
     },
     "url": "/"
 }
@@ -291,3 +292,45 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
 ### Users
 
 The users API is used to manage users of the application.
+
+#### Create User
+
+Endpoint: `POST /users`
+
+Create a new user.
+
+##### Request Parameters
+
+| Key        | Type   | Location | Description          | Required | Default |
+| ---------- | ------ | -------- | -------------------- | -------- | ------- |
+| `name`     | string | JSON     | User's full name     | Yes      | None    |
+| `email`    | string | JSON     | User's email address | Yes      | None    |
+| `password` | string | JSON     | User's password      | Yes      | None    |
+
+`name` must be 1-64 characters long.
+
+`email` must be 1-64 characters long and a valid email address.
+
+`password` must be 8-72 characters long.
+
+##### Response
+
+This endpoint returns the newly created user. It also logs the user in by
+storing their email address in a session cookie. A status code of `201 Created`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/users' -H 'Content-Type: application/json' -d '{"name":"John Doe","email":"someone@example.com","password":"p4$5w0rd"}'
+```
+```json
+{
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "someone@example.com"
+    },
+    "url": "/users"
+}
+```

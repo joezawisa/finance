@@ -19,7 +19,8 @@ def index():
 
     return make_response(data={
         'services': {
-            'index': flask.url_for('index')
+            'index': flask.url_for('index'),
+            'users': flask.url_for('users.index')
         },
         'url': flask.url_for('index')
     }, status_code=200)
