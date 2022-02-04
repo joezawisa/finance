@@ -23,6 +23,7 @@ def index():
             'login': flask.url_for('login'),
             'logout': flask.url_for('logout'),
             'users': flask.url_for('users.index'),
+            'accounts': flask.url_for('accounts.index'),
             'types': {
                 'accounts': flask.url_for('accounts.types')
             }

@@ -300,6 +300,7 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
         "login": "/login",
         "logout": "/logout",
         "users": "/users",
+        "accounts": "/accounts",
         "types": {
             "accounts": "/accounts/types"
         }
@@ -451,5 +452,45 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/accounts/type
         }
     ],
     "url": "/accounts/types"
+}
+```
+
+#### Create Account
+
+Endpoint: `POST /accounts`
+
+Create a new account.
+
+##### Request Parameters
+
+| Key        | Type    | Location | Description       | Required | Default |
+| ---------- | ------- | -------- | ----------------- | -------- | ------- |
+| `type`     | integer | JSON     | Account type      | Yes      | None    |
+| `name`     | string  | JSON     | Account name      | Yes      | None    |
+| `balance`  | decimal | JSON     | Beginning balance | No       | `0`     |
+
+`type` must be a valid account type.
+
+`name` must be 1-64 characters long.
+
+##### Response
+
+This endpoint returns the newly created account. A status code of `201 Created`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/accounts' -H 'Content-Type: application/json' -d '{"type":0,"name":"My First Bank Account","balance":1.23}'
+```
+```json
+{
+    "account": {
+        "id": 1,
+        "type": 0,
+        "name": "My First Bank Account",
+        "balance": 1.23
+    },
+    "url": "/accounts"
 }
 ```
