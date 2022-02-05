@@ -18,6 +18,7 @@ accounts, investments, and other assets. The application is written in
 | [`.dockerignore`](.dockerignore)                     | Docker filter                                    |
 | [`Dockerfile`](Dockerfile)                           | Docker build script                              |
 | [`compose.yml`](compose.yml)                         | Docker configuration for development             |
+| [`schema.sql`](schema.sql)                           | Database schema                                  |
 | [`requirements.txt`](requirements.txt)               | Application dependencies                         |
 | [`setup.py`](setup.py)                               | Package configuration                            |
 | [`finance/`](finance/)                               | Application package                              |
@@ -28,6 +29,11 @@ accounts, investments, and other assets. The application is written in
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
 | [`tools/install`](tools/install)                     | Script to install local development environment  |
 | [`tools/generateSecretKey`](tools/generateSecretKey) | Script to generate a secret key for Flask        |
+
+## Database Structure
+
+A [PostgreSQL](https://www.postgresql.org) database is required to run the
+application. Its structure is defined in [`schema.sql`](schema.sql).
 
 ## Setup
 

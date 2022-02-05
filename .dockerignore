@@ -33,6 +33,7 @@ compose.yml
 
 # Project
 
+schema.sql
 tools/
 finance.key
 finance.crt
