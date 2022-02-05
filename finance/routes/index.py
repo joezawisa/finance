@@ -25,7 +25,8 @@ def index():
             'users': flask.url_for('users.index'),
             'accounts': flask.url_for('accounts.index'),
             'types': {
-                'accounts': flask.url_for('accounts.types')
+                'accounts': flask.url_for('accounts.types'),
+                'transactions': flask.url_for('transactions.types')
             }
         },
         'url': flask.url_for('index')

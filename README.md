@@ -334,7 +334,8 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
         "users": "/users",
         "accounts": "/accounts",
         "types": {
-            "accounts": "/accounts/types"
+            "accounts": "/accounts/types",
+            "transactions": "/transactions/types"
         }
     },
     "url": "/"
@@ -568,3 +569,30 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/accounts' -H
 ### Transactions
 
 The transactions API is used to manage financial transactions.
+
+#### Show Transaction Types
+
+Endpoint: `GET /transactions/types`
+
+Get a list of transaction types.
+
+##### Request Parameters
+
+This endpoint does not require any parameters to process a request.
+
+##### Response
+
+This endpoint returns a list of transaction types. A status code of `200 OK`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/transactions/types'
+```
+```json
+{
+    "types": [],
+    "url": "/transactions/types"
+}
+```
