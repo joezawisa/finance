@@ -11,21 +11,22 @@ accounts, investments, and other assets. The application is written in
 
 ## Code Structure
 
-| Path                                                 | Description                                        |
-| ---------------------------------------------------- | -------------------------------------------------- |
-| [`README.md`](README.md)                             | Project documentation                              |
-| [`.gitignore`](.gitignore)                           | Git filter                                         |
-| [`.dockerignore`](.dockerignore)                     | Docker filter                                      |
-| [`Dockerfile`](Dockerfile)                           | Docker build script                                |
-| [`compose.yml`](compose.yml)                         | Docker configuration for development               |
-| [`requirements.txt`](requirements.txt)               | Application dependencies                           |
-| [`setup.py`](setup.py)                               | Package configuration                              |
-| [`finance/`](finance/)                               | Application package                                |
-| [`finance/__init__.py`](finance/__init__.py)         | Application initialization                         |
-| [`finance/config.py`](finance/config.py)             | Application configuration                          |
-| [`tools/`](tools/)                                   | Development tools                                  |
-| [`tools/install`](tools/install)                     | Script to install local development environment    |
-| [`tools/generateSecretKey`](tools/generateSecretKey) | Script to generate a secret key for Flask          |
+| Path                                                 | Description                                      |
+| ---------------------------------------------------- | ------------------------------------------------ |
+| [`README.md`](README.md)                             | Project documentation                            |
+| [`.gitignore`](.gitignore)                           | Git filter                                       |
+| [`.dockerignore`](.dockerignore)                     | Docker filter                                    |
+| [`Dockerfile`](Dockerfile)                           | Docker build script                              |
+| [`compose.yml`](compose.yml)                         | Docker configuration for development             |
+| [`requirements.txt`](requirements.txt)               | Application dependencies                         |
+| [`setup.py`](setup.py)                               | Package configuration                            |
+| [`finance/`](finance/)                               | Application package                              |
+| [`finance/__init__.py`](finance/__init__.py)         | Application initialization                       |
+| [`finance/config.py`](finance/config.py)             | Application configuration                        |
+| [`tools/`](tools/)                                   | Development tools                                |
+| [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
+| [`tools/install`](tools/install)                     | Script to install local development environment  |
+| [`tools/generateSecretKey`](tools/generateSecretKey) | Script to generate a secret key for Flask        |
 
 ## Setup
 
