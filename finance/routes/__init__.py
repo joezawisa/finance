@@ -60,3 +60,4 @@ def handle_exception(e):
 from . import index
 from . import auth
 from . import users
+from . import accounts
