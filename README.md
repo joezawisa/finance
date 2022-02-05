@@ -23,6 +23,7 @@ accounts, investments, and other assets. The application is written in
 | [`finance/`](finance/)                               | Application package                              |
 | [`finance/__init__.py`](finance/__init__.py)         | Application initialization                       |
 | [`finance/config.py`](finance/config.py)             | Application configuration                        |
+| [`finance/model.py`](finance/model.py)               | Application database interface                   |
 | [`tools/`](tools/)                                   | Development tools                                |
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
 | [`tools/install`](tools/install)                     | Script to install local development environment  |
@@ -133,6 +134,15 @@ This ensures a fresh start next time you run the application.
 docker compose down
 ```
 
+### Database
+
+A [PostgreSQL](https://www.postgresql.org) database is required to run the
+application. If running with [Docker Compose](https://docs.docker.com/compose/),
+[`compose.yml`](compose.yml) will automatically bring up a
+[PostgreSQL](https://www.postgresql.org) database for you. Connection details
+are supplied to the application with
+[environment variables](#environment-variables).
+
 ### Environment Variables
 
 These environment variables must be present to run the application. If running
@@ -143,6 +153,11 @@ with [Docker Compose](https://docs.docker.com/compose/),
 | ------------------ | ------------------------------------------------- | -------- | ------- |
 | `APPLICATION_ROOT` | Root URI of the application                       | No       | `/`     |
 | `FLASK_KEY`        | Secret key for encrypting Flask's session cookies | Yes      | None    |
+| `DB_HOST`          | Database server hostname/IP address               | Yes      | None    |
+| `DB_PORT`          | Database server TCP port                          | No       | `5432`  |
+| `DB_NAME`          | Databse name                                      | Yes      | None    |
+| `DB_USER`          | Database user                                     | Yes      | None    |
+| `DB_PASSWORD`      | Database password                                 | Yes      | None    |
 
 You can also set the `TZ` environment variable when you run the application to
 configure the time zone. However, it is better to set the time zone when

@@ -1,6 +1,15 @@
 version: '3.9'
 
 services:
+    db:
+        image: postgres
+        environment:
+            TZ: America/Detroit
+            POSTGRES_DB: finance
+            POSTGRES_USER: finance
+            POSTGRES_PASSWORD: finance
+        ports:
+            - 5432:5432
     web:
         build:
             context: .
@@ -17,6 +26,10 @@ services:
         ]
         environment:
             FLASK_KEY: finance
+            DB_HOST: db
+            DB_NAME: finance
+            DB_USER: finance
+            DB_PASSWORD: finance
         volumes:
             - .:/app
         ports:

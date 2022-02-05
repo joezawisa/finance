@@ -7,6 +7,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Set the application's root path
 ENV APPLICATION_ROOT /
 
+# Set the database port
+ENV DB_PORT 5432
+
 WORKDIR /app
 
 # Install dependencies
