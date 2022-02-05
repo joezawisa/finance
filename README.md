@@ -11,30 +11,31 @@ accounts, investments, and other assets. The application is written in
 
 ## Code Structure
 
-| Path                                                       | Description                                      |
-| ---------------------------------------------------------- | ------------------------------------------------ |
-| [`README.md`](README.md)                                   | Project documentation                            |
-| [`.gitignore`](.gitignore)                                 | Git filter                                       |
-| [`.dockerignore`](.dockerignore)                           | Docker filter                                    |
-| [`Dockerfile`](Dockerfile)                                 | Docker build script                              |
-| [`compose.yml`](compose.yml)                               | Docker configuration for development             |
-| [`schema.sql`](schema.sql)                                 | Database schema                                  |
-| [`requirements.txt`](requirements.txt)                     | Application dependencies                         |
-| [`setup.py`](setup.py)                                     | Package configuration                            |
-| [`finance/`](finance/)                                     | Application package                              |
-| [`finance/__init__.py`](finance/__init__.py)               | Application initialization                       |
-| [`finance/config.py`](finance/config.py)                   | Application configuration                        |
-| [`finance/model.py`](finance/model.py)                     | Application database interface                   |
-| [`finance/routes/`](finance/routes/)                       | API controllers                                  |
-| [`finance/routes/index.py`](finance/routes/index.py)       | Index API controller                             |
-| [`finance/routes/auth.py`](finance/routes.auth.py)         | Authentication API controller                    |
-| [`finance/routes/users.py`](finance/routes/users.py)       | Users API controller                             |
-| [`finance/routes/accounts.py`](finance/routes/accounts.py) | Accounts API controller                          |
-| [`tools/`](tools/)                                         | Development tools                                |
-| [`tools/requirements.txt`](tools/requirements.txt)         | Dependencies for local development environment   |
-| [`tools/install`](tools/install)                           | Script to install local development environment  |
-| [`tools/generateSecretKey`](tools/generateSecretKey)       | Script to generate a secret key for Flask        |
-| [`tools/db`](tools/db)                                     | Script to manage the database                    |
+| Path                                                               | Description                                      |
+| ------------------------------------------------------------------ | ------------------------------------------------ |
+| [`README.md`](README.md)                                           | Project documentation                            |
+| [`.gitignore`](.gitignore)                                         | Git filter                                       |
+| [`.dockerignore`](.dockerignore)                                   | Docker filter                                    |
+| [`Dockerfile`](Dockerfile)                                         | Docker build script                              |
+| [`compose.yml`](compose.yml)                                       | Docker configuration for development             |
+| [`schema.sql`](schema.sql)                                         | Database schema                                  |
+| [`requirements.txt`](requirements.txt)                             | Application dependencies                         |
+| [`setup.py`](setup.py)                                             | Package configuration                            |
+| [`finance/`](finance/)                                             | Application package                              |
+| [`finance/__init__.py`](finance/__init__.py)                       | Application initialization                       |
+| [`finance/config.py`](finance/config.py)                           | Application configuration                        |
+| [`finance/model.py`](finance/model.py)                             | Application database interface                   |
+| [`finance/routes/`](finance/routes/)                               | API controllers                                  |
+| [`finance/routes/index.py`](finance/routes/index.py)               | Index API controller                             |
+| [`finance/routes/auth.py`](finance/routes.auth.py)                 | Authentication API controller                    |
+| [`finance/routes/users.py`](finance/routes/users.py)               | Users API controller                             |
+| [`finance/routes/accounts.py`](finance/routes/accounts.py)         | Accounts API controller                          |
+| [`finance/routes/transactions.py`](finance/routes/transactions.py) | Transactions API controller                      |
+| [`tools/`](tools/)                                                 | Development tools                                |
+| [`tools/requirements.txt`](tools/requirements.txt)                 | Dependencies for local development environment   |
+| [`tools/install`](tools/install)                                   | Script to install local development environment  |
+| [`tools/generateSecretKey`](tools/generateSecretKey)               | Script to generate a secret key for Flask        |
+| [`tools/db`](tools/db)                                             | Script to manage the database                    |
 
 ## Database Structure
 
@@ -563,3 +564,7 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/accounts' -H
     "url": "/accounts"
 }
 ```
+
+### Transactions
+
+The transactions API is used to manage financial transactions.
