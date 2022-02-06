@@ -77,6 +77,17 @@ The `transactions` table holds information about financial transactions.
 | `amount` | `REAL`     | Transaction amount     |
 | `date`   | `DATE`     | Transaction date       |
 
+### Transfers
+
+The `transfers` table holds information about transfers between financial
+accounts.
+
+| Field    | Type     | Description                          |
+| -------- | -------- | ------------------------------------ |
+| `id`     | `BIGINT` | Transaction identifier               |
+| `source` | `BIGINT` | Account transferred from             |
+| `target` | `BIGINT` | Account transferred to               |
+
 ## Setup
 
 ### Install a Local Development Environment
