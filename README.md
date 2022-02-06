@@ -333,6 +333,7 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
         "logout": "/logout",
         "users": "/users",
         "accounts": "/accounts",
+        "transactions": "/transactions",
         "types": {
             "accounts": "/accounts/types",
             "transactions": "/transactions/types"
@@ -592,7 +593,71 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/transactions/
 ```
 ```json
 {
-    "types": [],
+    "types": [
+        {
+            "id": 0,
+            "name": "Transfer"
+        }
+    ],
     "url": "/transactions/types"
+}
+```
+
+#### Create Transaction
+
+Endpoint: `POST /transactions`
+
+Create a financial transaction.
+
+##### Request Parameters
+
+These parameters are for all transactions.
+
+| Key      | Type    | Location | Description        | Required | Default |
+| -------- | ------- | -------- | ------------------ | -------- | ------- |
+| `type`   | integer | JSON     | Transaction type   | Yes      | None    |
+| `amount` | number  | JSON     | Transaction amount | Yes      | None    |
+| `date`   | string  | JSON     | Transaction date   | No       | Today   |
+
+`type` must be a valid transaction type.
+
+`date` must be in `YYYY-MM-DD` format.
+
+###### Transfer Parameters
+
+These parameters are only for transfers.
+
+| Key      | Type    | Location | Description              | Required | Default |
+| -------- | ------- | -------- | ------------------------ | -------- | ------- |
+| `source` | integer | JSON     | Account transferred from | Yes      | None    |
+| `target` | integer | JSON     | Account transferred to   | Yes      | None    |
+
+`source` must be a valid account identifier.
+
+`target` must be a valid account identifier.
+
+##### Response
+
+This endpoint returns the newly created transfer. A status code of `201 Created`
+indicates a successful response.
+
+##### Example
+
+###### Transfer
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/transactions' -H 'Content-Type: application/json' -d '{"type":0,"amount":1.23,"date":"2022-02-03","source":1,"target":2}'
+```
+```json
+{
+    "transaction": {
+        "id": 1,
+        "type": 0,
+        "amount": 1.23,
+        "date": "2022-02-03",
+        "source": 1,
+        "target": 2
+    },
+    "url": "/transactions"
 }
 ```

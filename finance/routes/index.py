@@ -24,6 +24,7 @@ def index():
             'logout': flask.url_for('logout'),
             'users': flask.url_for('users.index'),
             'accounts': flask.url_for('accounts.index'),
+            'transactions': flask.url_for('transactions.index'),
             'types': {
                 'accounts': flask.url_for('accounts.types'),
                 'transactions': flask.url_for('transactions.types')
