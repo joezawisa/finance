@@ -122,7 +122,55 @@ def index():
         flask.request.json['name']
     ]).fetchone()
 
+    # Include the account's URL in the response
+    account['url'] = flask.url_for('accounts.detail', id=account['id'])
+
     # Return the account
     return make_response(data={'account': account}, status_code=201)
+
+@blueprint.route('/<int:id>', methods=['GET'])
+def detail(id):
+    """
+    Show an existing account.
+    
+    Parameters:
+    - None
+
+    Returns:
+    - Response Object
+    """
+
+    make_response = finance.routes.response_maker(flask.url_for('accounts.detail', id=id))
+
+    # Require the user to authenticate
+    if 'id' not in flask.session:
+
+        return make_response(data={
+            'error': 'User is not logged in'
+        }, headers={
+            'WWW-Authenticate': 'Basic realm="Finance API"'
+        }, status_code=401)
+    
+    # Connect to the database
+    db = finance.model.connect()
+
+    # Search for an account with the specified ID owned by the logged-in user
+    account = db.execute("SELECT id, type, name, balance FROM accounts WHERE id = %s AND owner = %s;", [
+        id,
+        flask.session['id']
+    ]).fetchone()
+
+    # Make sure the account exists
+    if account:
+
+        # Include the account's URL in the response
+        account['url'] = flask.url_for('accounts.detail', id=id)
+
+        # Return the account
+        return make_response(data={'account': account}, status_code=200)
+
+    else:
+
+        return make_response(data={'error': 'Account not found'}, status_code=404)
 
 finance.app.register_blueprint(blueprint)

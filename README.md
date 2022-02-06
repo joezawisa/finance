@@ -561,9 +561,47 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/accounts' -H
         "id": 1,
         "type": 0,
         "name": "My First Bank Account",
-        "balance": 1.23
+        "balance": 1.23,
+        "url": "/accounts/1"
     },
     "url": "/accounts"
+}
+```
+
+#### Show Account
+
+Endpoint: `GET /account/<id>`
+
+Show an existing account.
+
+##### Request Parameters
+
+| Key  | Type    | Location | Description        | Required | Default |
+| ---- | ------- | -------- | ------------------ | -------- | ------- |
+| `id` | integer | Path     | Account identifier | Yes      | None    |
+
+`id` must be a valid account identifier.
+
+##### Response
+
+This endpoint returns the requested account. A status code of `200 OK` indicates
+a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/accounts/1'
+```
+```json
+{
+    "account": {
+        "id": 1,
+        "type": 0,
+        "name": "My First Bank Account",
+        "balance": 1.23,
+        "url": "/accounts/1"
+    },
+    "url": "/accounts/1"
 }
 ```
 
