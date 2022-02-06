@@ -103,3 +103,31 @@ def login():
         }, headers={
             'WWW-Authenticate': 'Basic realm="Finance API"'
         }, status_code=401)
+
+@finance.app.route('/logout', methods = ['POST'])
+def logout():
+    """
+    Logout from an active session.
+    
+    Parameters:
+    - None
+    
+    Returns:
+    - Response Object
+    """
+
+    make_response = finance.routes.response_maker(flask.url_for('logout'))
+
+    # If the user isn't logged in, there's nothing to do
+    if 'id' not in flask.session:
+
+        return make_response(data={
+            'error': 'User is not logged in'
+        }, headers={
+            'WWW-Authenticate': 'Basic realm="Finance API"'
+        }, status_code=401)
+    
+    # If the user is logged in, clear their session to log them out
+    flask.session.clear()
+
+    return make_response(status_code=200)

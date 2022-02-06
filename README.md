@@ -285,6 +285,7 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
     "services": {
         "index": "/",
         "login": "/login",
+        "logout": "/logout",
         "users": "/users"
     },
     "url": "/"
@@ -322,6 +323,32 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/login' -H 'C
 ```json
 {
     "url": "/login"
+}
+```
+
+#### Logout
+
+Endpoint: `POST /logout`
+
+Logout from an active session.
+
+##### Request Parameters
+
+This endpoint does not require any parameters to process a request.
+
+##### Response
+
+This endpoint does not return any data. It logs the user out by clearing the
+session cookie. A status code of `200 OK` indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/logout'
+```
+```json
+{
+    "url": "/logout"
 }
 ```
 

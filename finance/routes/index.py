@@ -21,6 +21,7 @@ def index():
         'services': {
             'index': flask.url_for('index'),
             'login': flask.url_for('login'),
+            'logout': flask.url_for('logout'),
             'users': flask.url_for('users.index')
         },
         'url': flask.url_for('index')
