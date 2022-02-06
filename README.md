@@ -409,9 +409,47 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/users' -H 'C
     "user": {
         "id": 1,
         "name": "John Doe",
-        "email": "someone@example.com"
+        "email": "someone@example.com",
+        "url": "/users/1"
     },
     "url": "/users"
+}
+```
+
+#### Show User
+
+Endpoints: `GET /users/<id>`
+
+Get a user's profile.
+
+##### Request Parameters
+
+| Key  | Type    | Location | Description     | Required | Default |
+| ---- | ------- | -------- | --------------- | -------- | ------- |
+| `id` | integer | Path     | User identifier | Yes      | None    |
+
+`id` must be a valid user identifier. If `self` is supplied in place of the `id` parameter, `id` is assumed to be the
+identifier of the logged-in user.
+
+##### Response
+
+This endpoint returns the requested user's profile. A status code of `200 OK`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/users/1'
+```
+```json
+{
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "someone@example.com",
+        "url": "/users/1"
+    },
+    "url": "/users/1"
 }
 ```
 

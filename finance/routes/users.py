@@ -104,10 +104,70 @@ def index():
         hash
     ]).fetchone()
 
+    # Include the user's URL in the response
+    user['url'] = flask.url_for('users.detail', id=user['id'])
+
     # Log the user in
     flask.session['id'] = user['id']
 
     # Return the user
     return make_response(data={'user': user}, status_code=201)
+
+@blueprint.route('/<int:id>', methods=['GET'])
+@blueprint.route('/self', methods=['GET'])
+def detail(id=None):
+    """
+    Get a user's profile.
+    
+    Parameters:
+    - id: user identifier
+    
+    Returns:
+    - Response Object
+    """
+
+    make_response = finance.routes.response_maker(flask.url_for('users.detail', id=id))
+
+    # The user must be logged in to see their profile
+    if 'id' in flask.session:
+
+        # If no user ID was given, assume the logged-in user's ID
+        if not id:
+
+            id = flask.session['id']
+
+        # We don't want them looking at anyone else's profile
+        if flask.session['id'] != id:
+
+            return make_response(data={'error': 'User not found'}, status_code=404)
+
+    else:
+
+        return make_response(data={
+            'error': 'User is not logged in'
+        }, headers={
+            'WWW-Authenticate': 'Basic realm="Finance API"'
+        }, status_code=401)
+
+    # Connect to the database
+    db = finance.model.connect()
+
+    # Find the user and retrieve their profile information
+    user = db.execute("SELECT id, name, email FROM users WHERE id = %s;", [
+        id
+    ]).fetchone()
+
+    # Make sure the user was found
+    if user:
+
+        # Include the user's URL in the response
+        user['url'] = flask.url_for('users.detail', id=user['id'])
+
+        # Return the user
+        return make_response(data={'user': user}, status_code=200)
+
+    else:
+
+        return make_response(data={'error': 'User not found'}, status_code=404)
 
 finance.app.register_blueprint(blueprint)
