@@ -694,8 +694,46 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/transactions
         "amount": 1.23,
         "date": "2022-02-03",
         "source": 1,
-        "target": 2
+        "target": 2,
+        "url": "/transactions/1"
     },
     "url": "/transactions"
+}
+```
+
+#### Show Transaction
+
+Endpoint: `GET /transactions/<id>`
+
+Show a transaction.
+
+##### Request Parameters
+
+| Key  | Type    | Location | Description              | Required | Default |
+| ---- | ------- | -------- | ------------------------ | -------- | ------- |
+| `id` | integer | JSON     | Transaction identifier   | Yes      | None    |
+
+##### Response
+
+This endpoint returns the requested transaction. A status code of `200 OK`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/transactions/1'
+```
+```json
+{
+    "transaction": {
+        "id": 1,
+        "type": 0,
+        "amount": 1.23,
+        "date": "2022-02-03",
+        "source": 1,
+        "target": 2,
+        "url": "/transactions/1"
+    },
+    "url": "/transactions/1"
 }
 ```

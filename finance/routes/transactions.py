@@ -213,12 +213,87 @@ def index():
         # Include transfer fields in response
         transaction.update(transfer)
 
-        # Format the date
+        # Format the date and include transaction's URL in response
         transaction.update({
-            'date': transaction['date'].strftime(f'%Y-%m-%d')
+            'date': transaction['date'].strftime(f'%Y-%m-%d'),
+            'url': flask.url_for('transactions.detail', id=transaction['id'])
         })
 
         # Return the transaction
         return make_response(data={'transaction': transaction}, status_code=201)
+
+@blueprint.route('/<int:id>', methods=['GET'])
+def detail(id):
+    """
+    Show a transaction.
+    
+    Parameters:
+    - None
+
+    Returns:
+    - Response Object
+    """
+
+    make_response = finance.routes.response_maker(flask.url_for('transactions.detail', id=id))
+
+    # Require the user to authenticate
+    if 'id' not in flask.session:
+
+        return make_response(data={
+            'error': 'User is not logged in'
+        }, headers={
+            'WWW-Authenticate': 'Basic realm="Finance API"'
+        }, status_code=401)
+
+    # Connect to the database
+    db = finance.model.connect()
+
+    # Search for a transaction with the specified ID
+    transaction = db.execute(
+        "SELECT id, type, amount, date FROM transactions WHERE transactions.id = %s;", [
+        id
+    ]).fetchone()
+
+    # Make sure the transaction exists
+    if transaction:
+
+        # Check if this is a transfer
+        if transaction['type'] == 0:
+
+            # Search the database for a transfer with the specified ID and owned by the logged-in user
+            transfer = db.execute("SELECT source, target FROM transfers WHERE id = %s "
+            "AND (SELECT owner FROM accounts WHERE accounts.id = transfers.source) = %s "
+            "AND (SELECT owner FROM accounts WHERE accounts.id = transfers.target) = %s;", [
+                id,
+                flask.session['id'],
+                flask.session['id']
+            ]).fetchone()
+
+            # Make sure the transfer was found
+            if transfer:
+
+                # Include transfer fields in response
+                transaction.update(transfer)
+
+            else:
+
+                return make_response(data={'error': 'Transaction not found'}, status_code=404)
+        
+        else:
+
+            return make_response(data={'error': 'Invalid transaction type'}, status_code=500)
+        
+        # Format the date and include transaction's URL in response
+        transaction.update({
+            'date': transaction['date'].strftime(f'%Y-%m-%d'),
+            'url': flask.url_for('transactions.detail', id=transaction['id'])
+        })
+
+        # Return the transaction
+        return make_response(data={'transaction': transaction}, status_code=200)
+
+    else:
+
+        return make_response(data={'error': 'Transaction not found'}, status_code=404)
 
 finance.app.register_blueprint(blueprint)
