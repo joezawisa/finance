@@ -40,3 +40,6 @@ def response_maker(url):
         return response
     
     return make_response
+
+# Import API controllers
+from . import index

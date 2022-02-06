@@ -26,6 +26,7 @@ accounts, investments, and other assets. The application is written in
 | [`finance/config.py`](finance/config.py)             | Application configuration                        |
 | [`finance/model.py`](finance/model.py)               | Application database interface                   |
 | [`finance/routes/`](finance/routes/)                 | API controllers                                  |
+| [`finance/routes/index.py`](finance/routes/index.py) | Index API controller                             |
 | [`tools/`](tools/)                                   | Development tools                                |
 | [`tools/requirements.txt`](tools/requirements.txt)   | Dependencies for local development environment   |
 | [`tools/install`](tools/install)                     | Script to install local development environment  |
@@ -256,3 +257,32 @@ The following endpoints are exposed by the finance API. When following the
 examples, make sure to replace `localhost` with the hostname (or IP address) and
 port of the server where you're hosting the application. You can also remove the
 `-k` flag if you're not using a self-signed certificate.
+
+### Index
+
+Endpoint: `GET /`
+
+Get a list of services available from the API.
+
+#### Request Parameters
+
+This endpoint does not require any parameters to process a request.
+
+#### Response
+
+This endpoint returns a list of API services. A status code of `200 OK`
+indicates a successful response.
+
+#### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost'
+```
+```json
+{
+    "services": {
+        "index": "/"
+    },
+    "url": "/"
+}
+```
