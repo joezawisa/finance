@@ -66,6 +66,17 @@ The `accounts` table holds information about financial accounts.
 | `name`    | `VARCHAR(64)` | Account name                        |
 | `balance` | `REAL`        | Account balance                     |
 
+### Transactions
+
+The `transactions` table holds information about financial transactions.
+
+| Field    | Type       | Description            |
+| -------- | ---------- | ---------------------- |
+| `id`     | `BIGINT`   | Transaction identifier |
+| `type`   | `SMALLINT` | Transaction type       |
+| `amount` | `REAL`     | Transaction amount     |
+| `date`   | `DATE`     | Transaction date       |
+
 ## Setup
 
 ### Install a Local Development Environment

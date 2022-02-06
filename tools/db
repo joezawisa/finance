@@ -116,7 +116,8 @@ def init(ctx):
 
     tables = [
         'users',
-        'accounts'
+        'accounts',
+        'transactions'
     ]
 
     # Drop all tables from the database
