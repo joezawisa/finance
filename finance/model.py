@@ -53,7 +53,7 @@ def close(error = None):
         if not (db.closed):
 
             # Commit any changes unless there was an error
-            if not error:
+            if not flask.g.pop('exception', None):
                 
                 db.commit()
             

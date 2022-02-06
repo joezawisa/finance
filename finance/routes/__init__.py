@@ -2,6 +2,7 @@
 
 import finance
 import flask
+import werkzeug.exceptions
 
 # Simplify response construction in controllers
 def response_maker(url):
@@ -40,6 +41,20 @@ def response_maker(url):
         return response
     
     return make_response
+
+# Return JSON instead of HTML for HTTP errors
+@finance.app.errorhandler(werkzeug.exceptions.HTTPException)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    # Let other functions know that there was an exception
+    # (since they will no longer receive the exception object)
+    flask.g.exception = e
+    # Start with the correct headers and status code from the error
+    response = e.get_response()
+    # Replace the body with JSON
+    response.data = flask.json.dumps({'error': e.description})
+    response.content_type = 'application/json'
+    return response
 
 # Import API controllers
 from . import index
