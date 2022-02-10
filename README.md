@@ -89,6 +89,18 @@ accounts.
 | `source` | `BIGINT` | Account transferred from             |
 | `target` | `BIGINT` | Account transferred to               |
 
+### Interest
+
+The `interest` table holds information about interest accrued by financial
+accounts.
+
+| Field       | Type     | Description                    |
+| ----------- | -------- | ------------------------------ |
+| `id`        | `BIGINT` | Transaction identifier         |
+| `account`   | `BIGINT` | Account identifier             |
+| `startdate` | `DATE`   | Start date of interest accrual |
+| `enddate`   | `DATE`   | End date of interest accrual   |
+
 ## Setup
 
 ### Install a Local Development Environment

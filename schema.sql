@@ -35,3 +35,13 @@ CREATE TABLE transfers (
     FOREIGN KEY(target) REFERENCES accounts(id) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY(id)
 );
+
+CREATE TABLE interest (
+    id BIGINT NOT NULL UNIQUE,
+    account BIGINT NOT NULL,
+    startdate DATE,
+    enddate DATE,
+    FOREIGN KEY(id) REFERENCES transactions(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(account) REFERENCES accounts(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY(id)
+);
