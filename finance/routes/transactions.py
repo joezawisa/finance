@@ -5,7 +5,8 @@ import flask
 import datetime
 
 transaction_types = {
-    0: "Transfer"
+    0: "Transfer",
+    1: "Interest"
 }
 
 blueprint = flask.Blueprint('transactions', __name__, url_prefix='/transactions')
@@ -81,8 +82,8 @@ def index():
         # And that it's a number
         if (isinstance(flask.request.json['amount'], float) or isinstance(flask.request.json['amount'], int)):
 
-            # And that it's positive if this is a transfer
-            if (flask.request.json['type'] in [0]) and not (flask.request.json['amount'] > 0):
+            # And that it's positive if this is a transfer or interest
+            if (flask.request.json['type'] in [0, 1]) and not (flask.request.json['amount'] > 0):
 
                 return make_response(data={'error': 'Transaction amount must be positive'}, status_code=400)
         
@@ -221,6 +222,138 @@ def index():
 
         # Return the transaction
         return make_response(data={'transaction': transaction}, status_code=201)
+    
+    # Check if this is an interest transaction
+    if flask.request.json['type'] == 1:
+
+        startdate = None
+
+        # Check whether start date is present in JSON payload
+        if 'startdate' in flask.request.json:
+
+            # Verify that it's a string
+            if isinstance(flask.request.json['startdate'], str):
+
+                try:
+
+                    # Convert it to a date object
+                    startdate = datetime.datetime.strptime(flask.request.json['startdate'], f'%Y-%m-%d')
+
+                except ValueError:
+
+                    return make_response(data={'error': 'Start date must be formatted as YYYY-MM-DD'}, status_code=400)
+
+            else:
+
+                return make_response(data={'Start date must be a string'}, status_code=400)
+        
+        enddate = None
+
+        # Check whether end date is present in JSON payload
+        if 'enddate' in flask.request.json:
+
+            # Verify that end date was not included without start date
+            if not startdate:
+
+                return make_response(data={'error': 'Cannot include end date without start date'}, status_code=400)
+
+            # Verify that it's a string
+            if isinstance(flask.request.json['enddate'], str):
+
+                try:
+
+                    # Convert it to a date object
+                    enddate = datetime.datetime.strptime(flask.request.json['enddate'], f'%Y-%m-%d')
+
+                except ValueError:
+
+                    return make_response(data={'error': 'End date must be formatted as YYYY-MM-DD'}, status_code=400)
+                
+            else:
+
+                return make_response(data={'End date must be a string'}, status_code=400)
+        
+        else:
+
+            # Verify that start date was not included without end date
+            if startdate:
+
+                return make_response(data={'error': 'Cannot include start date without end date'})
+
+        # Connect to the database
+        db = finance.model.connect()
+
+        # Verify that account is present in JSON payload
+        if 'account' in flask.request.json:
+
+            # And that it's an integer
+            if isinstance(flask.request.json['account'], int):
+
+                # Search for the account
+                account = db.execute('SELECT balance FROM accounts WHERE id = %s AND owner = %s;', [
+                    flask.request.json['account'],
+                    flask.session['id']
+                ]).fetchone()
+
+                # Verify that the account exists (and belongs to the user)
+                if not account:
+
+                    return make_response(data={'error': 'Account does not exist'}, status_code=400)
+
+            else:
+
+                return make_response(data={'error': 'Account must be an integer'}, status_code=400)
+
+        else:
+
+            return make_response(data={'error': 'Missing account'}, status_code=400)
+
+        # Adjust the balance of the account
+        db.execute("UPDATE accounts SET balance = %s WHERE id = %s;", [
+            account['balance'] + flask.request.json['amount'],
+            flask.request.json['account']
+        ])
+
+        # Create the transaction
+        transaction = db.execute("INSERT INTO transactions (type, amount, date) VALUES (%s, %s, %s) RETURNING id, type, amount, date;", [
+            flask.request.json['type'],
+            flask.request.json['amount'],
+            date
+        ]).fetchone() if 'date' in flask.request.json else db.execute("INSERT INTO transactions (type, amount) VALUES (%s, %s) RETURNING id, type, amount, date;", [
+            flask.request.json['type'],
+            flask.request.json['amount'],
+        ]).fetchone()
+
+        # Create the interest entry
+        interest = db.execute("INSERT INTO interest (id, account, startdate, enddate) VALUES (%s, %s, %s, %s) RETURNING account, startdate, enddate;", [
+            transaction['id'],
+            flask.request.json['account'],
+            flask.request.json['startdate'],
+            flask.request.json['enddate']
+        ]).fetchone() if startdate and enddate else db.execute("INSERT INTO interest (id, account) VALUES (%s, %s) RETURNING account, startdate, enddate;", [
+            transaction['id'],
+            flask.request.json['account'],
+        ]).fetchone()
+
+        # Include interest fields in response
+        transaction.update(interest)
+
+        # Format the start and end dates
+        if transaction['startdate'] and transaction['enddate']:
+
+            transaction.update({
+                'startdate': transaction['startdate'].strftime(f'%Y-%m-%d'),
+                'enddate': transaction['enddate'].strftime(f'%Y-%m-%d')
+            })
+
+        # Format the date and include transaction's URL in response
+        transaction.update({
+            'date': transaction['date'].strftime(f'%Y-%m-%d'),
+            'url': flask.url_for('transactions.detail', id=transaction['id'])
+        })
+
+        # Return the transaction
+        return make_response(data={'transaction': transaction}, status_code=201)
 
 @blueprint.route('/<int:id>', methods=['GET'])
 def detail(id):
@@ -278,7 +411,35 @@ def detail(id):
             else:
 
                 return make_response(data={'error': 'Transaction not found'}, status_code=404)
-        
+
+        # Check if this is an interest transaction
+        elif transaction['type'] == 1:
+
+            # Search the database for an interest entry with the specified ID and owned by the logged-in user
+            interest = db.execute("SELECT account, startdate, enddate FROM interest WHERE id = %s "
+            "AND (SELECT owner FROM accounts WHERE accounts.id = interest.account) = %s;", [
+                id,
+                flask.session['id']
+            ]).fetchone()
+
+            # Make sure the interest entry was found
+            if interest:
+
+                # Include interest fields in response
+                transaction.update(interest)
+
+                # Format the start and end dates
+                if transaction['startdate'] and transaction['enddate']:
+
+                    transaction.update({
+                        'startdate': transaction['startdate'].strftime(f'%Y-%m-%d'),
+                        'enddate': transaction['enddate'].strftime(f'%Y-%m-%d')
+                    })
+
+            else:
+
+                return make_response(data={'error': 'Transaction not found'}, status_code=404)
+            
         else:
 
             return make_response(data={'error': 'Invalid transaction type'}, status_code=500)

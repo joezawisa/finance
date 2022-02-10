@@ -647,6 +647,10 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/transactions/
         {
             "id": 0,
             "name": "Transfer"
+        },
+        {
+            "id": 1,
+            "name": "Interest"
         }
     ],
     "url": "/transactions/types"
@@ -686,6 +690,20 @@ These parameters are only for transfers.
 
 `target` must be a valid account identifier.
 
+###### Interest Parameters
+
+These parameters are only for interest transactions.
+
+| Key         | Type    | Location | Description                    | Required | Default |
+| ----------- | ------- | -------- | ------------------------------ | -------- | ------- |
+| `account`   | integer | JSON     | Account identifier             | Yes      | None    |
+| `startdate` | string  | JSON     | Start date of interest accrual | No       | None    |
+| `enddate`   | string  | JSON     | End date of interest accrual   | No       | None    |
+
+`startdate` must be in `YYYY-MM-DD` format.
+
+`enddate` must be in `YYYY-MM-DD` format.
+
 ##### Response
 
 This endpoint returns the newly created transfer. A status code of `201 Created`
@@ -708,6 +726,27 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/transactions
         "source": 1,
         "target": 2,
         "url": "/transactions/1"
+    },
+    "url": "/transactions"
+}
+```
+
+###### Interest
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/transactions' -H 'Content-Type: application/json' -d '{"type":1,"amount":1.23,"date":"2022-02-03","account":1,"startdate":"2022-01-04","enddate":"2022-02-03"}'
+```
+```json
+{
+    "transaction": {
+        "id": 2,
+        "type": 1,
+        "amount": 1.23,
+        "date": "2022-02-03",
+        "account": 1,
+        "startdate": "2022-01-04",
+        "enddate": "2022-02-03",
+        "url": "/transactions/2"
     },
     "url": "/transactions"
 }
