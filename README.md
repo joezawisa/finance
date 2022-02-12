@@ -752,6 +752,69 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/transactions
 }
 ```
 
+#### List Transactions
+
+Endpoint: `GET /transactions`
+
+Get a list of transactions.
+
+##### Request Parameters
+
+| Key       | Type    | Location | Description             | Required | Default |
+| --------- | ------- | -------- | ----------------------- | -------- | ------- |
+| `type`    | integer | Query    | Transaction type filter | No       | None    |
+| `date`    | string  | Query    | Transaction date filter | No       | None    |
+| `account` | integer | Query    | Account ID filter       | No       | None    |
+| `size`    | integer | Query    | Page size               | No       | `5`     |
+| `page`    | integer | Query    | Page index              | No       | `0`     |
+
+`type` must be a valid transaction type.
+
+`date` must be in `YYYY-MM-DD` format.
+
+`size` must be greater than or equal to `0`.
+
+`page` must be greater than or equal to `0`.
+
+##### Response
+
+This endpoint returns a list of transactions that match the given filter and the
+URL for the next page of transactions. A status code of `200 OK` indicates a
+successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/transactions'
+```
+```json
+{
+    "transactions": [
+        {
+            "id": 2,
+            "type": 1,
+            "amount": 1.23,
+            "date": "2022-02-03",
+            "account": 1,
+            "startdate": "2022-01-04",
+            "enddate": "2022-02-03",
+            "url": "/transactions/2"
+        },
+        {
+            "id": 1,
+            "type": 0,
+            "amount": 1.23,
+            "date": "2022-02-03",
+            "source": 1,
+            "target": 2,
+            "url": "/transactions/1"
+        }
+    ],
+    "next": "/transactions?page=1",
+    "url": "/transactions"
+}
+```
+
 #### Show Transaction
 
 Endpoint: `GET /transactions/<id>`
