@@ -580,6 +580,60 @@ curl -b cookies.txt -c cookies.txt -k -i -X POST 'https://localhost/accounts' -H
 }
 ```
 
+#### List Accounts
+
+Endpoint: `GET /accounts`
+
+Get a list of accounts.
+
+##### Request Parameters
+
+| Key       | Type    | Location | Description         | Required | Default |
+| --------- | ------- | -------- | ------------------- | -------- | ------- |
+| `type`    | integer | Query    | Account type filter | No       | None    |
+| `size`    | integer | Query    | Page size           | No       | `5`     |
+| `page`    | integer | Query    | Page index          | No       | `0`     |
+
+`type` must be a valid account type.
+
+`size` must be greater than or equal to `0`.
+
+`page` must be greater than or equal to `0`.
+
+##### Response
+
+This endpoint returns a list of accounts that match the given filter and the URL
+for the next page of accounts. A status code of `200 OK` indicates a successful
+response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/accounts'
+```
+```json
+{
+    "accounts": [
+        {
+            "id": 1,
+            "type": 0,
+            "name": "My First Bank Account",
+            "balance":1.23,
+            "url": "/accounts/1"
+        },
+        {
+            "id": 2,
+            "type": 1,
+            "name": "My Second Bank Account",
+            "balance": 4.56,
+            "url": "/accounts/2"
+        }
+    ],
+    "next": "/accounts?page=1",
+    "url": "/accounts"
+}
+```
+
 #### Show Account
 
 Endpoint: `GET /account/<id>`
