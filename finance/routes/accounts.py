@@ -236,7 +236,7 @@ def index():
         # Return the account
         return make_response(data={'account': account}, status_code=201)
 
-@blueprint.route('/<int:id>', methods=['GET', 'PUT', 'PATCH'])
+@blueprint.route('/<int:id>', methods=['GET', 'PUT', 'PATCH', 'DELETE'])
 def detail(id):
     """
     Show or update an existing account.
@@ -271,8 +271,18 @@ def detail(id):
     # Make sure the account exists
     if account:
 
+        # If this is a DELETE request, delete the account
+        if flask.request.method == 'DELETE':
+
+            db.execute("DELETE FROM accounts WHERE id = %s AND owner = %s;", [
+                id,
+                flask.session['id']
+            ])
+
+            return make_response(data={}, status_code=204)
+
         # If this is a PUT/PATCH request, update the account details
-        if flask.request.method in ['PUT', 'PATCH']:
+        elif flask.request.method in ['PUT', 'PATCH']:
 
             # Verify that JSON payload is present in the request
             if not flask.request.json:

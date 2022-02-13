@@ -714,6 +714,34 @@ curl -b cookies.txt -c cookies.txt -k -i -X PUT 'https://localhost/accounts/1' -
 }
 ```
 
+#### Delete Account
+
+Endpoint: `DELETE /account/<id>`
+
+Delete an account.
+
+##### Request Parameters
+
+| Key  | Type    | Location | Description        | Required | Default |
+| ---- | ------- | -------- | ------------------ | -------- | ------- |
+| `id` | integer | Path     | Account identifier | Yes      | None    |
+
+##### Response
+
+This endpoint does not return any data. A status code of `204 No Content`
+indicates a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X DELETE 'https://localhost/accounts/1'
+```
+```json
+{
+    "url": "/accounts/1"
+}
+```
+
 ### Transactions
 
 The transactions API is used to manage financial transactions.
