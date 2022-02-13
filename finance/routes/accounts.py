@@ -236,10 +236,10 @@ def index():
         # Return the account
         return make_response(data={'account': account}, status_code=201)
 
-@blueprint.route('/<int:id>', methods=['GET'])
+@blueprint.route('/<int:id>', methods=['GET', 'PUT', 'PATCH'])
 def detail(id):
     """
-    Show an existing account.
+    Show or update an existing account.
     
     Parameters:
     - None
@@ -258,7 +258,7 @@ def detail(id):
         }, headers={
             'WWW-Authenticate': 'Basic realm="Finance API"'
         }, status_code=401)
-    
+
     # Connect to the database
     db = finance.model.connect()
 
@@ -270,6 +270,80 @@ def detail(id):
 
     # Make sure the account exists
     if account:
+
+        # If this is a PUT/PATCH request, update the account details
+        if flask.request.method in ['PUT', 'PATCH']:
+
+            # Verify that JSON payload is present in the request
+            if not flask.request.json:
+
+                return make_response(data={'error': 'Request does not contain JSON payload'}, status_code=400)
+
+            # Check for account type
+            if 'type' in flask.request.json:
+
+                account_type = flask.request.json['type']
+
+                # Verify that it's an integer
+                if isinstance(account_type, int):
+
+                    # Verify that it's a valid account type
+                    if account_type in account_types:
+
+                        # Update the account type
+                        account['type'] = account_type
+                    
+                    else:
+
+                        return make_response(data={'error': 'Invalid account type'}, status_code=400)
+                    
+                else:
+
+                    return make_response(data={'error': 'Account type must be an integer'})
+
+            # Check for account name
+            if 'name' in flask.request.json:
+
+                account_name = flask.request.json['name']
+
+                # Verify that it's a string
+                if isinstance(account_name, str):
+
+                    # And that it's the right length
+                    if ((1 <= len(account_name)) and (len(account_name) <= 64)):
+
+                        # Search for an account with the same name and owner
+                        result = db.execute("SELECT COUNT(*) FROM accounts WHERE owner = %s AND name = %s AND NOT id = %s;", [
+                            flask.session['id'],
+                            account_name,
+                            id
+                        ]).fetchone()
+
+                        # Verify that this isn't a duplicate account
+                        if result['count'] != 0:
+
+                            return make_response(data={'error': 'An account already exists with that name'}, status_code=409)
+                        
+                        else:
+
+                            # Update the account name
+                            account['name'] = account_name
+                    
+                    else:
+
+                        return make_response(data={'error': 'Account name must be 1-64 characters'}, status_code=400)
+                
+                else:
+
+                    return make_response(data={'error': 'Account name must be a string'}, status_code=400)
+
+            # Update the account
+            account = db.execute("UPDATE accounts SET type = %s, name = %s WHERE id = %s AND owner = %s RETURNING id, type, name, balance;", [
+                account['type'],
+                account['name'],
+                id,
+                flask.session['id']
+            ]).fetchone()
 
         # Include the account's URL in the response
         account['url'] = flask.url_for('accounts.detail', id=id)

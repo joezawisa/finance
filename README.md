@@ -671,6 +671,49 @@ curl -b cookies.txt -c cookies.txt -k -i -X GET 'https://localhost/accounts/1'
 }
 ```
 
+#### Edit Account
+
+Endpoint: `PUT/PATCH /account/<id>`
+
+Modify an existing account.
+
+##### Request Parameters
+
+| Key        | Type    | Location | Description           | Required | Default |
+| ---------- | ------- | -------- | --------------------- | -------- | ------- |
+| `id`       | integer | Path     | Account identifier    | Yes      | None    |
+| `type`     | integer | JSON     | Modified account type | No       | None    |
+| `name`     | string  | JSON     | Modified account name | No       | None    |
+
+`id` must be a valid account identifier.
+
+`type` must be a valid account type.
+
+`name` must be 1-64 characters long.
+
+##### Response
+
+This endpoint returns the modified account. A status code of `200 OK` indicates
+a successful response.
+
+##### Example
+
+```bash
+curl -b cookies.txt -c cookies.txt -k -i -X PUT 'https://localhost/accounts/1' -H 'Content-Type: application/json' -d '{"type":1,"name":"My Modified Bank Account"}'
+```
+```json
+{
+    "account": {
+        "id": 1,
+        "type": 1,
+        "name": "My Modified Bank Account",
+        "balance": 1.23,
+        "url": "/accounts/1"
+    },
+    "url": "/accounts/1"
+}
+```
+
 ### Transactions
 
 The transactions API is used to manage financial transactions.
