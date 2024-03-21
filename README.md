@@ -367,8 +367,8 @@ Login as a registered user.
 
 | Key        | Type   | Location | Description          | Required | Default |
 | ---------- | ------ | -------- | -------------------- | -------- | ------- |
-| `email`    | string | JSON     | User's email address | Yes      | None    |
-| `password` | string | JSON     | User's password      | Yes      | None    |
+| `email`    | string | Body     | User's email address | Yes      | None    |
+| `password` | string | Body     | User's password      | Yes      | None    |
 
 ##### Response
 
@@ -427,9 +427,9 @@ Create a new user.
 
 | Key        | Type   | Location | Description          | Required | Default |
 | ---------- | ------ | -------- | -------------------- | -------- | ------- |
-| `name`     | string | JSON     | User's full name     | Yes      | None    |
-| `email`    | string | JSON     | User's email address | Yes      | None    |
-| `password` | string | JSON     | User's password      | Yes      | None    |
+| `name`     | string | Body     | User's full name     | Yes      | None    |
+| `email`    | string | Body     | User's email address | Yes      | None    |
+| `password` | string | Body     | User's password      | Yes      | None    |
 
 `name` must be 1-64 characters long.
 
@@ -547,9 +547,9 @@ Create a new account.
 
 | Key        | Type    | Location | Description       | Required | Default |
 | ---------- | ------- | -------- | ----------------- | -------- | ------- |
-| `type`     | integer | JSON     | Account type      | Yes      | None    |
-| `name`     | string  | JSON     | Account name      | Yes      | None    |
-| `balance`  | decimal | JSON     | Beginning balance | No       | `0`     |
+| `type`     | integer | Body     | Account type      | Yes      | None    |
+| `name`     | string  | Body     | Account name      | Yes      | None    |
+| `balance`  | decimal | Body     | Beginning balance | No       | `0`     |
 
 `type` must be a valid account type.
 
@@ -680,8 +680,8 @@ Modify an existing account.
 | Key        | Type    | Location | Description           | Required | Default |
 | ---------- | ------- | -------- | --------------------- | -------- | ------- |
 | `id`       | integer | Path     | Account identifier    | Yes      | None    |
-| `type`     | integer | JSON     | Modified account type | No       | None    |
-| `name`     | string  | JSON     | Modified account name | No       | None    |
+| `type`     | integer | Body     | Modified account type | No       | None    |
+| `name`     | string  | Body     | Modified account name | No       | None    |
 
 `id` must be a valid account identifier.
 
@@ -792,9 +792,9 @@ These parameters are for all transactions.
 
 | Key      | Type    | Location | Description        | Required | Default |
 | -------- | ------- | -------- | ------------------ | -------- | ------- |
-| `type`   | integer | JSON     | Transaction type   | Yes      | None    |
-| `amount` | number  | JSON     | Transaction amount | Yes      | None    |
-| `date`   | string  | JSON     | Transaction date   | No       | Today   |
+| `type`   | integer | Body     | Transaction type   | Yes      | None    |
+| `amount` | number  | Body     | Transaction amount | Yes      | None    |
+| `date`   | string  | Body     | Transaction date   | No       | Today   |
 
 `type` must be a valid transaction type.
 
@@ -806,8 +806,8 @@ These parameters are only for transfers.
 
 | Key      | Type    | Location | Description              | Required | Default |
 | -------- | ------- | -------- | ------------------------ | -------- | ------- |
-| `source` | integer | JSON     | Account transferred from | Yes      | None    |
-| `target` | integer | JSON     | Account transferred to   | Yes      | None    |
+| `source` | integer | Body     | Account transferred from | Yes      | None    |
+| `target` | integer | Body     | Account transferred to   | Yes      | None    |
 
 `source` must be a valid account identifier.
 
@@ -819,9 +819,9 @@ These parameters are only for interest transactions.
 
 | Key         | Type    | Location | Description                    | Required | Default |
 | ----------- | ------- | -------- | ------------------------------ | -------- | ------- |
-| `account`   | integer | JSON     | Account identifier             | Yes      | None    |
-| `startdate` | string  | JSON     | Start date of interest accrual | No       | None    |
-| `enddate`   | string  | JSON     | End date of interest accrual   | No       | None    |
+| `account`   | integer | Body     | Account identifier             | Yes      | None    |
+| `startdate` | string  | Body     | Start date of interest accrual | No       | None    |
+| `enddate`   | string  | Body     | End date of interest accrual   | No       | None    |
 
 `startdate` must be in `YYYY-MM-DD` format.
 
@@ -948,7 +948,7 @@ Show a transaction.
 
 | Key  | Type    | Location | Description              | Required | Default |
 | ---- | ------- | -------- | ------------------------ | -------- | ------- |
-| `id` | integer | JSON     | Transaction identifier   | Yes      | None    |
+| `id` | integer | Body     | Transaction identifier   | Yes      | None    |
 
 ##### Response
 
