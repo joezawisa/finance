@@ -2,9 +2,7 @@
 
 by [Joe Zawisa](https://github.com/joezawisa)
 
-## About
-
-This project is a finance API to view transactions and balances of bank
+This project is an API to view transactions and balances of bank
 accounts, investments, and other assets. The application is written in
 [Python](https://www.python.org). It is built as a
 [Docker](https://www.docker.com) image to run in a container.
